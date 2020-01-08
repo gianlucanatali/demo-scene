@@ -134,6 +134,7 @@ variable "js_files" {
     "game/js/pacman.js",
     "game/js/paths.js",
     "game/js/sound.js",
+    "game/js/game.js",
     "game/js/tools.js"
   ]
 }
@@ -155,26 +156,26 @@ resource "google_storage_object_acl" "js_files" {
   role_entity = ["READER:allUsers"]
 }
 
-data "template_file" "game_js" {
-  template = file("../../pacman/game/js/game.js")
+data "template_file" "variables_js" {
+  template = file("../../pacman/game/js/variables.js")
   vars = {
     event_handler_api = join(",", formatlist("http://%s", google_compute_global_address.rest_proxy.*.address))
     cloud_provider = "GCP"
   }
 }
 
-resource "google_storage_bucket_object" "game_js" {
+resource "google_storage_bucket_object" "variables_js" {
   depends_on = ["google_storage_bucket_object.js_files"]
   bucket = data.template_file.storage_bucket_pacman.rendered
-  name = "game/js/game.js"
+  name = "game/js/variables.js"
   content_type = "text/javascript"
-  content = data.template_file.game_js.rendered
+  content = data.template_file.variables_js.rendered
 }
 
-resource "google_storage_object_acl" "game_js" {
-  depends_on = ["google_storage_bucket_object.game_js"]
+resource "google_storage_object_acl" "variables_js" {
+  depends_on = ["google_storage_bucket_object.variables_js"]
   bucket = data.template_file.storage_bucket_pacman.rendered
-  object = "${google_storage_bucket_object.game_js.output_name}"
+  object = "${google_storage_bucket_object.variables_js.output_name}"
   role_entity = ["READER:allUsers"]
 }
 

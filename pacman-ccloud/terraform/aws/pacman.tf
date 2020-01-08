@@ -92,6 +92,7 @@ variable "js_files" {
     "game/js/pacman.js",
     "game/js/paths.js",
     "game/js/sound.js",
+    "game/js/game.js",
     "game/js/tools.js"
   ]
 }
@@ -104,19 +105,19 @@ resource "aws_s3_bucket_object" "js_files" {
   source = "../../pacman/${var.js_files[count.index]}"
 }
 
-data "template_file" "game_js" {
-  template = file("../../pacman/game/js/game.js")
+data "template_file" "variables_js" {
+  template = file("../../pacman/game/js/variables.js")
   vars = {
     event_handler_api = "${aws_api_gateway_deployment.event_handler_v1.invoke_url}${aws_api_gateway_resource.event_handler_resource.path}"
     cloud_provider = "AWS"
   }
 }
 
-resource "aws_s3_bucket_object" "game_js" {
+resource "aws_s3_bucket_object" "variables_js" {
   bucket = aws_s3_bucket.pacman.bucket
-  key = "game/js/game.js"
+  key = "game/js/variables.js"
   content_type = "text/javascript"
-  content = data.template_file.game_js.rendered
+  content = data.template_file.variables_js.rendered
 }
 
 ###########################################

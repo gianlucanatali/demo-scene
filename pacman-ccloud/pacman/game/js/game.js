@@ -1,3 +1,6 @@
+//These 2 variables are defined in the variable.js file
+//var CLOUD_PROVIDER = "${cloud_provider}"
+//var EVENT_HANDLER_API = "${event_handler_api}"
 var KEYDOWN = false;
 var PAUSE = false;
 var LOCK = false;
@@ -384,9 +387,9 @@ function score(s, type) {
 
 function produceRecord(topic, record) {
 
-	const PROVIDER = "${cloud_provider}";
+	const PROVIDER = CLOUD_PROVIDER;
 	var contentType = "application/json";
-	var url = "${event_handler_api}?topic=" + topic;
+	var url = EVENT_HANDLER_API + "?topic=" + topic;
 	var json = JSON.stringify(record);
 
 	// The verification below is only
@@ -402,7 +405,7 @@ function produceRecord(topic, record) {
 		// requires in order to emmit the events.
 
 		contentType = "application/vnd.kafka.json.v2+json";
-		url = "${event_handler_api}/topics/" + topic;
+		url = EVENT_HANDLER_API + "/topics/" + topic;
 
 		var recordHolder = {};
 		recordHolder.value = record;

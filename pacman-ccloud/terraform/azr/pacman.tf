@@ -107,6 +107,7 @@ variable "js_files" {
     "game/js/pacman.js",
     "game/js/paths.js",
     "game/js/sound.js",
+    "game/js/game.js",
     "game/js/tools.js"
   ]
 }
@@ -122,22 +123,22 @@ resource "azurerm_storage_blob" "js_files" {
   source = "../../pacman/${var.js_files[count.index]}"
 }
 
-data "template_file" "game_js" {
-  template = file("../../pacman/game/js/game.js")
+data "template_file" "variables_js" {
+  template = file("../../pacman/game/js/variables.js")
   vars = {
     event_handler_api = "http://${azurerm_public_ip.rest_proxy[0].fqdn}"
     cloud_provider = "AZR"
   }
 }
 
-resource "azurerm_storage_blob" "game_js" {
+resource "azurerm_storage_blob" "variables_js" {
   depends_on = [module.staticweb]
-  name = "game/js/game.js"
+  name = "game/js/variables.js"
   storage_account_name = azurerm_storage_account.pacman.name
   storage_container_name = "$web"
   content_type = "text/javascript"
   type = "Block"
-  source_content = data.template_file.game_js.rendered
+  source_content = data.template_file.variables_js.rendered
 }
 
 ###########################################
