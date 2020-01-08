@@ -13,8 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM confluentinc/cp-kafka-connect-base:5.0.1
+FROM confluentinc/cp-kafka-connect:5.2.1
 
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
 
-RUN  confluent-hub install --no-prompt confluentinc/kafka-connect-syslog:1.0.0-preview
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-datagen:latest
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-solace-source:latest
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-solace-sink:latest
+RUN wget -O jms.zip https://products.solace.com/download/JMS_API
+RUN apt-get update && apt-get install -y zip 
+RUN unzip jms.zip
+RUN cp sol-jms-*/lib/sol-jms-*.jar /usr/share/confluent-hub-components/confluentinc-kafka-connect-solace-source/lib/
+RUN cp sol-jms-*/lib/sol-jms-*.jar /usr/share/confluent-hub-components/confluentinc-kafka-connect-solace-sink/lib
+
