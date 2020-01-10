@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="game/js/jquery-buzz.js"></script>
 		<script type="text/javascript" src="game/js/variables.js"></script>
 		<script type="text/javascript" src="game/js/game.js"></script>
+		<script type="text/javascript" src="game/js/ksql.js"></script>
 		<script type="text/javascript" src="game/js/tools.js"></script>
 		<script type="text/javascript" src="game/js/board.js"></script>
 		<script type="text/javascript" src="game/js/paths.js"></script>
@@ -77,6 +78,12 @@
 							$(".help-button").show();
 						}
 					}
+				});
+
+				$(".scoreboard-button").click(function(e) { 
+					e.stopPropagation();
+
+					window.location.href='scoreboard.html';
 				});
 				
 				$(".github,.putchu").click(function(e) { 
@@ -210,6 +217,7 @@
 			<canvas id="canvas-panel-title-pacman"></canvas>
 			<div id="score"><h2>1UP</h2><span>00</span></div>
 			<div id="highscore"><h2>High Score</h2><span>00</span></div>
+			<div id="rank"><h2>RANK</h2><span>-</span></div>
 			<div id="board">
 				<canvas id="canvas-board"></canvas>
 				<canvas id="canvas-paths"></canvas>
@@ -237,6 +245,7 @@
 			<canvas id="canvas-level-fruits"></canvas>
 			<div id="message"></div>
 			<div class="help-button">- help -</div>
+			<div class="scoreboard-button">score board</div>
 			<a class="sound" href="javascript:void(0);" data-sound="on"><img src="game/img/sound-on.png" alt="" border="0"></a>
 		</div>
 	

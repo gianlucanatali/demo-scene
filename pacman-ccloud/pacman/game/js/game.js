@@ -26,12 +26,23 @@ var TIME_FRUITS = 0;
 
 var HELP_DELAY = 1500;
 var HELP_TIMER = -1;
+
+window.setInterval(function(){
+	/// call your function here
+	updatePanel();
+  }, 5000);
 			
 function blinkHelp() { 
 	if ( $('.help-button').attr("class").indexOf("yo") > -1 ) { 
 		$('.help-button').removeClass("yo");
 	} else { 
 		$('.help-button').addClass("yo");
+	}
+
+	if ( $('.scoreboard-button').attr("class").indexOf("yo") > -1 ) { 
+		$('.scoreboard-button').removeClass("yo");
+	} else { 
+		$('.scoreboard-button').addClass("yo");
 	}
 }
 

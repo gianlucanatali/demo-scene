@@ -93,6 +93,7 @@ variable "js_files" {
     "game/js/paths.js",
     "game/js/sound.js",
     "game/js/game.js",
+    "game/js/ksql.js",
     "game/js/tools.js"
   ]
 }
@@ -110,6 +111,7 @@ data "template_file" "variables_js" {
   vars = {
     event_handler_api = "${aws_api_gateway_deployment.event_handler_v1.invoke_url}${aws_api_gateway_resource.event_handler_resource.path}"
     cloud_provider = "AWS"
+    ksqldb_url = "http://${aws_alb.ksqldb_server.dns_name}"
   }
 }
 
