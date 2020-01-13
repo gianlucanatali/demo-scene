@@ -4,8 +4,8 @@ function updatePanel(){
 			var player = playersScores[i];
 			if(player.row.columns[0]===window.name) { 
 				$('#rank span').html('#'+(i+1));
-				HIGHSCORE = player.row.columns[1];
-				$('#highscore span').html(HIGHSCORE);
+				//HIGHSCORE = player.row.columns[1];
+				//$('#highscore span').html(HIGHSCORE);
 				break;
 			}
 		}

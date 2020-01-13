@@ -32,6 +32,8 @@ window.setInterval(function(){
 	/// call your function here
 	updatePanel();
   }, 5000);
+
+//updatePanel();
 			
 function blinkHelp() { 
 	if ( $('.help-button').attr("class").indexOf("yo") > -1 ) { 
@@ -106,7 +108,7 @@ function doInitGame(newGame, lastScore, lastLevel) {
             }
 		}
 	};
-	request.open('POST', '${highest_score_api}', true);
+	request.open('POST', HIGHEST_SCORE_API, true);
 	request.setRequestHeader('Accept', 'application/vnd.ksql.v1+json');
 	request.setRequestHeader('Content-Type', 'application/vnd.ksql.v1+json');
     request.send(JSON.stringify({}));

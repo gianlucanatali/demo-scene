@@ -8,3 +8,6 @@ cluster_api_secret = "<CCLOUD_API_SECRET>"
 
 schema_registry_url = "<SCHEMA_REGISTRY_URL>"
 schema_registry_basic_auth = "<SCHEMA_REGISTRY_API_KEY>:<SCHEMA_REGISTRY_SECRET>"
+
+#Use this to have a fixed name (Optional)
+#s3_bucket_name     = "<UNIQUE_S3_BUCKET_NAME>"

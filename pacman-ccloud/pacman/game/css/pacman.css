@@ -48,15 +48,15 @@ body {
 	width: 120px;
 }
 #highscore { 
-	left: 150px;
+	left: 130px;
 	width: 150px;
 }
 #rank { 
-	left: 350px;
+	left: 370px;
 	width: 50px;
 }
 #level {
-	left: 350px;
+	left: 290px;
 	width: 50px;
 }
 #score h2, #score span, #highscore h2, #highscore span, 
@@ -325,6 +325,14 @@ h3 {
 #panel .help-button, #panel .scoreboard-button { 
 	top: -535px;
 	height: 25px;
+	right: 35px;
+}
+
+#panel .scoreboard-button{
+	top: -635px;
+	height: 25px;
+	width:150px;
+	text-transform: uppercase;
 }
 
 #panel.scoreboardPage h1 { 
