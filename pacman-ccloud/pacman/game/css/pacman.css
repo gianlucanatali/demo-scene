@@ -36,13 +36,12 @@ body {
 }
 
 
-#score, #highscore, #level  { 
+#score, #highscore, #level, #rank  { 
 	position: absolute;
 	display: inline;
 	top: 70px;
 	margin: 0px;
 	padding: 0px;
-	width: 160px;
 }
 #score { 
 	left: 0px;
@@ -52,11 +51,17 @@ body {
 	left: 150px;
 	width: 150px;
 }
+#rank { 
+	left: 350px;
+	width: 50px;
+}
 #level {
 	left: 350px;
 	width: 50px;
 }
-#score h2, #score span, #highscore h2, #highscore span, #level h2, #level span { 
+#score h2, #score span, #highscore h2, #highscore span, 
+#level h2, #level span, #rank h2, #rank span, 
+#scoreboard h2, #scoreboard span { 
 	display: block;
 	text-transform: uppercase;
 	font-weight: normal;
@@ -299,7 +304,7 @@ h3 {
 	padding: 10px 25px 30px 65px;
 }
 
-.help-button { 
+.help-button, .scoreboard-button { 
 	position: absolute;
 	text-align: center;
 	bottom: 8px;
@@ -312,13 +317,19 @@ h3 {
 	cursor: pointer;
 	color: #78abf7;
 	transition: color 1.5s;
+	width: 100px;
 }
-.help-button.yo { 
+.help-button.yo, .scoreboard-button.yo { 
 	color: #333;
 }
-#panel .help-button { 
-	top: -510px;
+#panel .help-button, #panel .scoreboard-button { 
+	top: -535px;
 	height: 25px;
+}
+
+#panel.scoreboardPage h1 { 
+	margin: 0px 0px 20px 0px;
+
 }
 
 #help h2 { 
@@ -361,6 +372,39 @@ h3 {
 
 #sound { 
 	position: absolute;
+}
+
+#scoreboard table {
+	border-collapse: collapse;
+}
+
+#scoreboard table,#scoreboard tr, #scoreboard td {
+	border: 1px solid white
+}
+
+#scoreboard table th, #scoreboard table td {
+    padding: 5px 20px;
+}
+
+#scoreboard table th {
+	color: rgb(190, 221, 12);
+	text-transform: uppercase;
+}
+
+.back-button {
+    top: 0px;
+    height: 25px;
+    position: absolute;
+    text-align: center;
+    right: 55px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    color: #78abf7;
+    transition: color 1.5s;
+    width: 200px;
 }
 
 .ui-mobile {

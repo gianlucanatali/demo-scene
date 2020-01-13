@@ -27,12 +27,23 @@ var TIME_FRUITS = 0;
 
 var HELP_DELAY = 1500;
 var HELP_TIMER = -1;
+
+window.setInterval(function(){
+	/// call your function here
+	updatePanel();
+  }, 5000);
 			
 function blinkHelp() { 
 	if ( $('.help-button').attr("class").indexOf("yo") > -1 ) { 
 		$('.help-button').removeClass("yo");
 	} else { 
 		$('.help-button').addClass("yo");
+	}
+
+	if ( $('.scoreboard-button').attr("class").indexOf("yo") > -1 ) { 
+		$('.scoreboard-button').removeClass("yo");
+	} else { 
+		$('.scoreboard-button').addClass("yo");
 	}
 }
 
@@ -69,7 +80,7 @@ function initGame(newGame) {
 			doInitGame(newGame, lastScore, lastLevel);
 		}
 	};
-	request.open('POST', '${ksqldb_query_api}', true);
+	request.open('POST', KSQLDB_QUERY_API, true);
 	request.setRequestHeader('Accept', 'application/vnd.ksql.v1+json');
 	request.setRequestHeader('Content-Type', 'application/vnd.ksql.v1+json');
 	request.send(JSON.stringify(ksqlQuery));
