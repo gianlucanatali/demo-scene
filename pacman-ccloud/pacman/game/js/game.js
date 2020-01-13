@@ -1,11 +1,11 @@
-//These 2 variables are defined in the variable.js file
-//var CLOUD_PROVIDER = "${cloud_provider}"
-//var EVENT_HANDLER_API = "${event_handler_api}"
+const PROVIDER = "${cloud_provider}";
+
 var KEYDOWN = false;
 var PAUSE = false;
 var LOCK = false;
 
 var HIGHSCORE = 0;
+var HIGHSCORE_WORKER;
 var SCORE = 0;
 var SCORE_BUBBLE = 10;
 var SCORE_SUPER_BUBBLE = 50;
@@ -35,9 +35,78 @@ function blinkHelp() {
 	}
 }
 
-function initGame(newgame) { 
+function initGame(newGame) {
 
-	if (newgame) { 
+	var lastScore = 0;
+	var lastLevel = 0;
+
+	// Temporary workaround for GCP and Azure
+	// while their implementations are not using
+	// ksqlDB and thus don't support pull queries.
+	if (PROVIDER == "GCP" || PROVIDER == "AZR") {
+		doInitGame(newGame, lastScore, lastLevel);
+		return;
+	}
+
+	var ksqlQuery = {};
+	ksqlQuery.ksql =
+		"SELECT HIGHEST_SCORE, HIGHEST_LEVEL " +
+		"FROM STATS_PER_USER WHERE ROWKEY = '" +
+		window.name + "';"
+
+	var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4) {
+			if (this.status == 200) {
+				var result = JSON.parse(this.responseText);
+				if (result[1] != undefined || result[1] != null) {
+					var row = result[1].row;
+					lastScore = row.columns[0];
+					lastLevel = row.columns[1];
+				}
+			}
+			doInitGame(newGame, lastScore, lastLevel);
+		}
+	};
+	request.open('POST', '${ksqldb_query_api}', true);
+	request.setRequestHeader('Accept', 'application/vnd.ksql.v1+json');
+	request.setRequestHeader('Content-Type', 'application/vnd.ksql.v1+json');
+	request.send(JSON.stringify(ksqlQuery));
+	
+}
+
+function doInitGame(newGame, lastScore, lastLevel) {
+
+	// Retrieve the highest score so the current
+	// player knows how far behind he/she might
+	// be if compared to the best player.
+	var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4) {
+			if (this.status == 200) {
+                var result = JSON.parse(this.responseText);
+				HIGHSCORE = result.highestScore;
+				if (HIGHSCORE === 0) {
+					$('#highscore span').html("00");
+				} else { 
+					$('#highscore span').html(HIGHSCORE);
+				}
+            }
+		}
+	};
+	request.open('POST', '${highest_score_api}', true);
+	request.setRequestHeader('Accept', 'application/vnd.ksql.v1+json');
+	request.setRequestHeader('Content-Type', 'application/vnd.ksql.v1+json');
+    request.send(JSON.stringify({}));
+
+	// Creates a worker that continuously update
+	// the highest score every five seconds.
+	HIGHSCORE_WORKER = new Worker("/game/js/highscore.js");
+	HIGHSCORE_WORKER.onmessage = function(event) {
+		HIGHSCORE = event.data;
+	};
+
+	if (newGame) { 
 		stopPresentation();
 		stopTrailer();
 	
@@ -46,7 +115,13 @@ function initGame(newgame) {
 
 		$('#help').fadeOut("slow");
 		
-		score(0);
+		score(lastScore);
+		LEVEL = lastLevel;
+		if (LEVEL == 0) {
+			LEVEL = 1;
+		}
+		$('#level span').html(LEVEL + "UP");
+
 		clearMessage();
 		$("#home").hide();
 		$("#panel").show();
@@ -78,28 +153,21 @@ function initGame(newgame) {
 		ctx.fill();
 		ctx.closePath();
 	}
-
 	initBoard();
 	drawBoard();
 	drawBoardDoor();
-	
 	initPaths();
 	drawPaths();
-	
 	initBubbles();
 	drawBubbles();
-	
 	initFruits();
-	
 	initPacman();
 	drawPacman();
-	
 	initGhosts();
 	drawGhosts();
-	
 	lifes();
-	
 	ready();
+
 }
 
 function win() { 
@@ -149,7 +217,9 @@ function nextLevel() {
 	TIME_LEVEL = 0;
 	TIME_LIFE = 0;
 	TIME_FRUITS = 0;
-	
+
+	$('#level span').html(LEVEL + "UP");
+
 }
 
 
@@ -349,15 +419,15 @@ function score(s, type) {
 	if (scoreAfter > scoreBefore) { 
 		lifes( +1 );
 	}
-
 	
-	if (SCORE > HIGHSCORE) { 
+	if (SCORE > HIGHSCORE) {
 		HIGHSCORE = SCORE;
-		if (HIGHSCORE === 0) { 
-			$('#highscore span').html("00");
-		} else { 
-			$('#highscore span').html(HIGHSCORE);
-		}
+	}
+
+	if (HIGHSCORE === 0) {
+		$('#highscore span').html("00");
+	} else { 
+		$('#highscore span').html(HIGHSCORE);
 	}
 	
 	if (type && (type === "clyde" || type === "pinky" || type === "inky" || type === "blinky") ) { 
@@ -387,7 +457,6 @@ function score(s, type) {
 
 function produceRecord(topic, record) {
 
-	const PROVIDER = CLOUD_PROVIDER;
 	var contentType = "application/json";
 	var url = EVENT_HANDLER_API + "?topic=" + topic;
 	var json = JSON.stringify(record);
