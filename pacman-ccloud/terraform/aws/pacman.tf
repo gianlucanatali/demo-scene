@@ -23,6 +23,13 @@ resource "aws_s3_bucket_object" "start" {
   source = "../../pacman/start.html"
 }
 
+resource "aws_s3_bucket_object" "scoreboard" {
+  bucket = aws_s3_bucket.pacman.bucket
+  key = "scoreboard.html"
+  content_type = "text/html"
+  source = "../../pacman/scoreboard.html"
+}
+
 ###########################################
 ################### CSS ###################
 ###########################################
@@ -93,6 +100,8 @@ variable "js_files" {
     "game/js/paths.js",
     "game/js/sound.js",
     "game/js/game.js",
+    "game/js/ksql.js",
+    "game/js/highscore.js",
     "game/js/tools.js"
   ]
 }
@@ -108,7 +117,9 @@ resource "aws_s3_bucket_object" "js_files" {
 data "template_file" "variables_js" {
   template = file("../../pacman/game/js/variables.js")
   vars = {
+    ksqldb_query_api = "http://${aws_alb.ksqldb_lbr.dns_name}/query"
     event_handler_api = "${aws_api_gateway_deployment.event_handler_v1.invoke_url}${aws_api_gateway_resource.event_handler_resource.path}"
+    highest_score_api = "${aws_api_gateway_deployment.highest_score_v1.invoke_url}${aws_api_gateway_resource.highest_score_resource.path}"
     cloud_provider = "AWS"
   }
 }
