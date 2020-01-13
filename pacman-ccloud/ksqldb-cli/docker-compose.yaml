@@ -1,0 +1,9 @@
+---
+version: '2'
+
+services:
+  ksqldb-cli:
+    image: confluentinc/ksqldb-cli:0.6.0
+    container_name: ksqldb-cli
+    entrypoint: /bin/sh
+    tty: true
