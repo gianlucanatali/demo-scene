@@ -1,4 +1,5 @@
-const PROVIDER = "${cloud_provider}";
+//defined in variables file
+//const CLOUD_PROVIDER = "${cloud_provider}";
 
 var KEYDOWN = false;
 var PAUSE = false;
@@ -43,7 +44,7 @@ function initGame(newGame) {
 	// Temporary workaround for GCP and Azure
 	// while their implementations are not using
 	// ksqlDB and thus don't support pull queries.
-	if (PROVIDER == "GCP" || PROVIDER == "AZR") {
+	if (CLOUD_PROVIDER == "GCP" || CLOUD_PROVIDER == "AZR") {
 		doInitGame(newGame, lastScore, lastLevel);
 		return;
 	}
@@ -468,7 +469,7 @@ function produceRecord(topic, record) {
 	// rely on REST Proxy to emmit the
 	// game events.
 	
-	if (PROVIDER == "GCP" || PROVIDER == "AZR") {
+	if (CLOUD_PROVIDER == "GCP" || CLOUD_PROVIDER == "AZR") {
 
 		// Fallback to the format that REST Proxy
 		// requires in order to emmit the events.
