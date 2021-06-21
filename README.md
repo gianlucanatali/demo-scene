@@ -26,7 +26,7 @@ You may well need to allocate Docker 8GB when running these. Avoid allocating al
   
 ###  Data pipelines (Database + KSQL + Elasticsearch)
 
-- [Streaming ETL and Analytics on Confluent with Maritime AIS data]((maritime-ais))
+- [Streaming ETL and Analytics on Confluent with Maritime AIS data](maritime-ais)
 - [Pipeline to the cloud](pipeline-to-the-cloud) - on-premises RDBMS to Cloud datawarehouse e.g. Snowflake ([✍️ blog](https://www.confluent.io/blog/cloud-analytics-for-on-premises-data-streams-with-kafka/?utm_campaign=rmoff&utm_source=demo-scene))
 - [Rail data streaming pipeline](rail-data-streaming-pipeline) ([🗣️talk](https://rmoff.dev/oredev19-on-track-with-kafka))
 - [Apache Kafka and KSQL in Action: Let’s Build a Streaming Data Pipeline!](build-a-streaming-pipeline) ([🗣️talk](https://go.rmoff.net/devoxxuk19))
@@ -38,11 +38,12 @@ You may well need to allocate Docker 8GB when running these. Avoid allocating al
 - [Building data pipelines with Confluent Cloud and GCP (BigQuery, GCS, etc)](gcp-pipeline)
 - [MS SQL with Debezium and ksqlDB](mssql-to-kafka-with-ksqldb) ([✍️ blog](https://rmoff.net/2020/09/18/using-the-debezium-ms-sql-connector-with-ksqldb-embedded-kafka-connect/))
 - [Streaming ETL pipeline from MongoDB to Snowflake with Apache Kafka®](streaming-etl-mongodb-snowflake)
+- [Bridge to Cloud (and back!) with Confluent and MongoDB Atlas](mongodb-demo)
 
 ###  ksqlDB (previously known as KSQL)
 - [Introduction to ksqlDB 01](introduction-to-ksqldb) ([🗣️talk](https://rmoff.dev/ksqldb-slides))
 - [Introduction to KSQL   02](ksql-intro)
-- [ksqlDB tombstones]((ksqldb-tombstones))
+- [ksqlDB tombstones](ksqldb-tombstones)
 - [Using Twitter data with ksqlDB](ksqldb-twitter)
 - [KSQL UDF Advanced Example](ksql-udf-advanced-example)
 - [KSQL Troubleshooting](ksql-troubleshooting)
@@ -53,10 +54,11 @@ You may well need to allocate Docker 8GB when running these. Avoid allocating al
 - [KSQL workshop](ksql-workshop) (more recent version is [here](build-a-streaming-pipeline/workshop/))
 - [Multi-node ksqlDB and Kafka Connect clusters](multi-cluster-connect-and-ksql)
 - [Streaming ETL pipeline from MongoDB to Snowflake with Apache Kafka®](streaming-etl-mongodb-snowflake)
+- [Bridge to Cloud (and back!) with Confluent and MongoDB Atlas](mongodb-demo)
 
 ###  Kafka Connect
 
-- [Single Message Transform in Kafka Connect]((kafka-connect-single-message-transforms))
+- [Single Message Transform in Kafka Connect](kafka-connect-single-message-transforms)
 - [Improvements Kafka Connect in Apache Kafka 2.3](connect-5.3-improvements)
 - [From Zero to Hero with Kafka Connect](kafka-connect-zero-to-hero) ([🗣️talk](https://rmoff.dev/crunch19-zero-to-hero-kafka-connect))
 - [Kafka Connect Converters and Serialization](connect-deepdive) ([✍️ blog](https://www.confluent.io/blog/kafka-connect-deep-dive-converters-serialization-explained/?utm_campaign=rmoff&utm_source=demo-scene))
@@ -88,6 +90,7 @@ You may well need to allocate Docker 8GB when running these. Avoid allocating al
 - [Using Replicator with Confluent Cloud](ccloud-replicator)
 - [Streaming ETL pipeline from MongoDB to Snowflake with Apache Kafka®](streaming-etl-mongodb-snowflake)
 - [Micronaut & AWS Lambda on Confluent Cloud](micronaut-lambda)
+- [Bridge to Cloud (and back!) with Confluent and MongoDB Atlas](mongodb-demo)
 
 ###  Confluent Platform
 
